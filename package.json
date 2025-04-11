@@ -17,6 +17,5 @@
   },
   "homepage": "https://github.com/kristijan00/svatovi#readme",
   "dependencies": {
-    "qrcode-generator": "^1.4.4"
   }
 }
