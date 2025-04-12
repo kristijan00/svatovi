@@ -1,0 +1,19 @@
+{
+  "name": "svatovi",
+  "version": "1.0.0",
+  "description": "svatovi qr code",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristijan00/svatovi.git"
+  },
+  "author": "Kristijan Dakovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kristijan00/svatovi/issues"
+  },
+  "homepage": "https://github.com/kristijan00/svatovi#readme"
+}

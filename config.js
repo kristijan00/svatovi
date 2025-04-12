@@ -1,0 +1,7 @@
+const CONFIG = {
+  DROPBOX_ACCESS_TOKEN: '',
+  DROPBOX_CLIENT_ID: '',
+  DROPBOX_CLIENT_SECRET: '',
+  DROPBOX_REFRESH_TOKEN: ''
+};
+export default CONFIG;
