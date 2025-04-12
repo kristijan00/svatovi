@@ -4,5 +4,4 @@ const CONFIG = {
   DROPBOX_CLIENT_SECRET: '',
   DROPBOX_REFRESH_TOKEN: ''
 };
-
 window.CONFIG = CONFIG;
