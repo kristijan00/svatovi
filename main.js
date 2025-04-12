@@ -1,4 +1,5 @@
 const fileInput = document.getElementById('fileInput');
+const loader = document.getElementById('loader');
 let uploadedFiles = [];
 
 const dbx = new Dropbox.Dropbox({
@@ -13,6 +14,13 @@ fileInput.addEventListener('change', () => {
 });
 
 const uploadFiles = () => {
+  if (uploadedFiles.length === 0) {
+    alert('No files selected!');
+    return;
+  }
+
+  showLoader(); // Show loader before starting the upload
+
   uploadedFiles.forEach(file => {
     dbx.filesUpload({
       path: `/test/${file.name}`,
@@ -25,6 +33,18 @@ const uploadFiles = () => {
       .catch(error => {
         console.error('Error:', error);
         alert('Error uploading files!');
-      });
+      }).finally(() => {
+        hideLoader(); // Hide loader after all uploads are complete
+      });;
   });
 }
+
+const showLoader = () => {
+  loader.classList.remove('hidden'); // Show the loader
+  document.body.style.pointerEvents = 'none'; // Disable all interactions
+};
+
+const hideLoader = () => {
+  loader.classList.add('hidden'); // Hide the loader
+  document.body.style.pointerEvents = 'auto'; // Re-enable interactions
+};
