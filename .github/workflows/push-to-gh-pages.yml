@@ -23,8 +23,13 @@ jobs:
           echo "  DROPBOX_CLIENT_SECRET: '${{ secrets.DROPBOX_CLIENT_SECRET }}'," >> config.js
           echo "  DROPBOX_REFRESH_TOKEN: '${{ secrets.DROPBOX_REFRESH_TOKEN }}'" >> config.js
           echo "};" >> config.js
-          echo "" >> config.js
           echo "window.CONFIG = CONFIG;" >> config.js
+
+      - name: Disable Jekyll
+        run: echo "" > .nojekyll
+
+      - name: Debug - List Files
+        run: ls -la
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
