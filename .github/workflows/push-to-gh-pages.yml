@@ -1,0 +1,32 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Replace 'main' with your default branch name if different
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Create Config File 🛠️
+        run: |
+          echo "const CONFIG = {" > config.js
+          echo "  DROPBOX_ACCESS_TOKEN: '${{ secrets.DROPBOX_ACCESS_TOKEN }}'," >> config.js
+          echo "  DROPBOX_CLIENT_ID: '${{ secrets.DROPBOX_CLIENT_ID }}'," >> config.js
+          echo "  DROPBOX_CLIENT_SECRET: '${{ secrets.DROPBOX_CLIENT_SECRET }}'," >> config.js
+          echo "  DROPBOX_REFRESH_TOKEN: '${{ secrets.DROPBOX_REFRESH_TOKEN }}'" >> config.js
+          echo "};" >> config.js
+          echo "export default CONFIG;" >> config.js
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch to deploy to
+          folder: . # Deploy the root folder (where your static files are)

@@ -1,14 +1,209 @@
+:root {
+  --primary-color   : #fcfcfc;
+  --secondary-color : #8182df;
+  --tertiary-color  : #17191d;
+  --quaternary-color: #6cb2ad;
+  --quinary-color   : #c6c8cf;
+}
+
+body {
+  background-color: var(--primary-color);
+  font-family     : "Inter", sans-serif;
+  overflow        : hidden;
+}
+
 .container {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
+  width          : 100%;
+  height         : 90vh;
+  display        : flex;
+  flex-direction : column;
+  align-items    : center;
   justify-content: center;
 }
 
-/* #placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-} */
+.container h1 {
+  color     : var(--secondary-color);
+  font-size : 36px;
+  text-align: center;
+}
+
+.container h2 {
+  color     : var(--quinary-color);
+  font-size : 16px;
+  margin    : 0px 0px 50px 0px;
+  text-align: center;
+}
+
+.file-upload {
+  background-color: #efefef;
+  padding         : 32px;
+  border-radius   : 20px;
+}
+
+.wrapper {
+  position : fixed;
+  top      : 75%;
+  left     : 50%;
+  transform: translate(-50%, -50%);
+  cursor   : pointer;
+}
+
+.wrapper a {
+  display        : block;
+  width          : 200px;
+  height         : 40px;
+  line-height    : 40px;
+  font-size      : 18px;
+  font-family    : sans-serif;
+  text-decoration: none;
+  color          : #333;
+  border         : 2px solid #333;
+  letter-spacing : 2px;
+  text-align     : center;
+  position       : relative;
+  transition     : all .35s;
+}
+
+.wrapper a span {
+  position: relative;
+  z-index : 2;
+}
+
+.wrapper a:after {
+  position  : absolute;
+  content   : "";
+  top       : 0;
+  left      : 0;
+  width     : 0;
+  height    : 100%;
+  background: var(--quaternary-color);
+  transition: all .35s;
+}
+
+.wrapper a:hover {
+  color: #fff;
+}
+
+.wrapper a:hover:after {
+  width: 100%;
+}
+
+input[type="file"] {
+  outline: none;
+  padding: 4px;
+  margin : -4px;
+}
+
+input[type="file"]:focus-within::file-selector-button,
+input[type="file"]:focus::file-selector-button {
+  outline       : 2px solid #0964b0;
+  outline-offset: 2px;
+}
+
+input[type="file"]::before {
+  top: 16px;
+}
+
+input[type="file"]::after {
+  top: 14px;
+}
+
+input[type="file"] {
+  position: relative;
+}
+
+input[type="file"]::file-selector-button {
+  width: 136px;
+  color: transparent;
+}
+
+input[type="file"]::before {
+  position      : absolute;
+  pointer-events: none;
+  left          : 40px;
+  color         : #0964b0;
+  content       : "Upload File";
+}
+
+input[type="file"]::after {
+  position        : absolute;
+  pointer-events  : none;
+  left            : 16px;
+  height          : 20px;
+  width           : 20px;
+  content         : "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
+}
+
+
+/* file upload button */
+input[type="file"]::file-selector-button {
+  border-radius   : 4px;
+  padding         : 0 16px;
+  height          : 40px;
+  cursor          : pointer;
+  background-color: white;
+  border          : 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow      : 0px 1px 0px rgba(0, 0, 0, 0.05);
+  margin-right    : 16px;
+  transition      : background-color 200ms;
+}
+
+/* file upload button hover state */
+input[type="file"]::file-selector-button:hover {
+  background-color: #f3f4f6;
+}
+
+/* file upload button active state */
+input[type="file"]::file-selector-button:active {
+  background-color: #e5e7eb;
+}
+
+@supports (-moz-appearance: none) {
+  input[type="file"]::file-selector-button {
+    color: #0964b0;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+ .container h1 {
+    font-size: 26px;
+  }
+
+  .container h2 {
+    font-size: 14px;
+    padding: 0 20px;
+  }
+
+  .file-upload {
+    padding: 16px;
+  }
+
+  .container button {
+    margin-top: 20px;
+  }
+
+  .wrapper a {
+    color          : #fff;
+    background-color: var(--quaternary-color);
+    opacity: 0.7;
+  }
+
+  .wrapper a:active {
+    opacity: 1;
+  }
+
+  .wrapper a:after {
+    width: 100%;
+    background: var(--quaternary-color);
+    transition: none;
+  }
+
+  .wrapper a:hover {
+    color: #fff;
+  }
+
+  .wrapper a:hover:after {
+    width: 100%;
+  }
+}

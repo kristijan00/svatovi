@@ -10,9 +10,17 @@
 
 <body>
   <div class="container">
-    <div id="placeHolder"></div>
+    <h1>Captured Moments</h1>
+    <h2>Thank you for being part of our day. Share your photos with us below.</h2>
+    <div class="file-upload">
+      <input type="file" id="fileInput" accept="image/*" multiple>
+    </div>
+    <div class="wrapper">
+      <a onclick="uploadFiles()"><span>Upload</span></a>
+    </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.js"></script>
+  <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dotenv@16.0.3/dist/dotenv.min.js"></script>
   <script type="text/javascript" src="main.js"></script>
 </body>
 
