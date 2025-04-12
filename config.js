@@ -4,4 +4,5 @@ const CONFIG = {
   DROPBOX_CLIENT_SECRET: '',
   DROPBOX_REFRESH_TOKEN: ''
 };
-export default CONFIG;
+
+window.CONFIG = CONFIG;
