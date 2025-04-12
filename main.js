@@ -1,6 +1,5 @@
 const fileInput = document.getElementById('fileInput');
 let uploadedFiles = [];
-import CONFIG from './config.js';
 
 const dbx = new Dropbox.Dropbox({
   clientId: CONFIG.DROPBOX_CLIENT_ID,
