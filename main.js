@@ -1,5 +1,8 @@
 const fileInput = document.getElementById('fileInput');
 const loader = document.getElementById('loader');
+const popup = document.getElementById('popup');
+const popupMessage = document.getElementById('popup-message');
+const popupClose = document.getElementById('popup-close');
 let uploadedFiles = [];
 
 const dbx = new Dropbox.Dropbox({
@@ -15,7 +18,7 @@ fileInput.addEventListener('change', () => {
 
 const uploadFiles = () => {
   if (uploadedFiles.length === 0) {
-    alert('No files selected!');
+    showPopup('No files selected!'); // Show error popup if no files are selected
     return;
   }
 
@@ -31,13 +34,11 @@ const uploadFiles = () => {
 
   // Wait for all uploads to complete
   Promise.all(uploadPromises)
-    .then(responses => {
-      console.log('Success:', responses);
-      alert('All files uploaded successfully!');
+    .then(() => {
+      showPopup('All files uploaded successfully!'); // Show success popup
     })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Error uploading files!');
+    .catch(() => {
+      showPopup('Error uploading files!'); // Show error popup
     })
     .finally(() => {
       fileInput.value = ''; // Clear the file input
@@ -55,3 +56,32 @@ const hideLoader = () => {
   loader.classList.add('hidden'); // Hide the loader
   document.body.style.pointerEvents = 'auto'; // Re-enable interactions
 };
+
+// Show the popup
+const showPopup = (message) => {
+  popupMessage.textContent = message;
+  popup.classList.remove('hidden');
+
+  // Automatically hide the popup after 5 seconds
+  setTimeout(() => {
+    hidePopup();
+  }, 4000);
+};
+
+// Hide the popup
+const hidePopup = () => {
+  popup.classList.add('hidden');
+};
+
+// Close popup on button click
+popupClose.addEventListener('click', hidePopup);
+
+fileInput.addEventListener('change', () => {
+  uploadedFiles.push(...fileInput.files);
+});
+
+document.addEventListener('click', (event) => {
+  if (event.target === popup) {
+    hidePopup(); // Hide popup when clicking outside of it
+  }
+})
