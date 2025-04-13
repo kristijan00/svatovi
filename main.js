@@ -21,23 +21,30 @@ const uploadFiles = () => {
 
   showLoader(); // Show loader before starting the upload
 
-  uploadedFiles.forEach(file => {
+  // Create an array of promises for all file uploads
+  const uploadPromises = uploadedFiles.map(file =>
     dbx.filesUpload({
-      path: `/test/${file.name}`,
+      path: `/svatovi/${file.name}`,
       contents: file,
     })
-      .then(response => {
-        console.log('Success:', response);
-        alert('Files uploaded successfully!');
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error uploading files!');
-      }).finally(() => {
-        hideLoader(); // Hide loader after all uploads are complete
-      });;
-  });
-}
+  );
+
+  // Wait for all uploads to complete
+  Promise.all(uploadPromises)
+    .then(responses => {
+      console.log('Success:', responses);
+      alert('All files uploaded successfully!');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error uploading files!');
+    })
+    .finally(() => {
+      fileInput.value = ''; // Clear the file input
+      uploadedFiles = []; // Reset the uploaded files array
+      hideLoader(); // Hide loader after all uploads are complete
+    });
+};
 
 const showLoader = () => {
   loader.classList.remove('hidden'); // Show the loader
