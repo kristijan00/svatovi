@@ -23,7 +23,7 @@ const uploadFiles = () => {
   }
 
   if (uploadedFiles.length > 5) {
-    showPopup('Moguće je priložiti maks. 5 fotografija odjednom!'); // Show error popup if more than 10 files are selected
+    showPopup('Moguće je priložiti maks. 5 fotografija odjednom!'); // Show error popup if more than 5 files are selected
     fileInput.value = ''; // Clear the file input
     uploadedFiles = []; // Reset the uploaded files array
     return;
@@ -84,7 +84,7 @@ const hidePopup = () => {
 popupClose.addEventListener('click', hidePopup);
 
 fileInput.addEventListener('change', () => {
-  uploadedFiles.push(...fileInput.files);
+  uploadedFiles = Array.from(fileInput.files); // Reset the array with the new files
 });
 
 document.addEventListener('click', (event) => {
