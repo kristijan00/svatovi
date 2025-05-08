@@ -22,29 +22,27 @@ body {
   flex-direction : column;
   align-items    : center;
   justify-content: center;
-  background     : url('./assets/background.jpg') center center fixed;
+  background     : url('./assets/background-picture.jpg') center 69% fixed;
 }
 
 .container .header {
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
   background-color: rgba(0, 0, 0, 0.7);
   /* Semi-transparent black background */
-  padding         : 5px 20px;
+  padding         : 30px 20px;
   /* Add padding for spacing */
   border-radius   : 8px;
   /* Optional     : Add rounded corners */
   margin-bottom   : 15px;
-}
-
-.container h1 {
-  color     : var(--secondary-color);
-  font-size : 36px;
-  text-align: center;
+  margin-top      : 16%;
 }
 
 .container h2 {
   color     : var(--quinary-color);
   font-size : 18px;
-  margin    : 0px 0px 50px 0px;
+  margin    : 0 auto;
   text-align: center;
 }
 
@@ -56,7 +54,7 @@ body {
 
 .wrapper {
   position : fixed;
-  top      : 80%;
+  top      : 90%;
   left     : 50%;
   transform: translate(-50%, -50%);
   cursor   : pointer;
@@ -285,21 +283,19 @@ input[type="file"]::file-selector-button:active {
 @media only screen and (max-width: 550px) {
 
   .container {
-    background: url('./assets/background.jpg') center center fixed no-repeat;
+    background: url('./assets/background-picture.jpg') center 67% fixed no-repeat;
   }
 
   .container .header {
-    padding      : 5px 10px;
+    margin-top      : 70%;
+    padding         : 10px 10px;
     /* Add padding for spacing */
-    border-radius: 5px;
-    /* Optional  : Add rounded corners */
-    margin-bottom: 20px;
-    width: 85%;
+    border-radius   : 5px;
+    /* Optional     : Add rounded corners */
+    /* margin-bottom: 20px; */
+    width           : 85%;
   }
 
-  .container h1 {
-    font-size: 26px;
-  }
 
   .container h2 {
     font-size: 16px;
@@ -312,10 +308,6 @@ input[type="file"]::file-selector-button:active {
 
   .container button {
     margin-top: 20px;
-  }
-
-  .wrapper {
-    top: 90%;
   }
 
   .wrapper a {
