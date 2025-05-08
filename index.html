@@ -10,13 +10,15 @@
 
 <body>
   <div class="container">
-    <h1>Captured Moments</h1>
-    <h2>Thank you for being part of our day. Share your photos with us below.</h2>
+    <div class="header">
+      <h1>Zabilježeni Trenuci</h1>
+      <h2>Hvala Vam što ste dio našeg dana! Podijelite s nama svoje fotografije ispod.</h2>
+    </div>
     <div class="file-upload">
       <input type="file" id="fileInput" accept="image/*" multiple>
     </div>
     <div class="wrapper">
-      <a onclick="uploadFiles()"><span>Upload</span></a>
+      <a onclick="uploadFiles()"><span>Učitaj</span></a>
     </div>
   </div>
   <div id="loader" class="loader hidden">
@@ -25,7 +27,7 @@
   <div id="popup" class="popup hidden">
     <div class="popup-content">
       <p id="popup-message"></p>
-      <button id="popup-close">Close</button>
+      <button id="popup-close">Zatvori</button>
     </div>
   </div>
   <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
