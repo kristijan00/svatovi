@@ -35,10 +35,10 @@ const uploadFiles = () => {
   // Wait for all uploads to complete
   Promise.all(uploadPromises)
     .then(() => {
-      showPopup('All files uploaded successfully!'); // Show success popup
+      showPopup('Uspješno ste učitali fotografije!'); // Show success popup
     })
     .catch(() => {
-      showPopup('Error uploading files!'); // Show error popup
+      showPopup('Ups! Dogodila se greška..'); // Show error popup
     })
     .finally(() => {
       fileInput.value = ''; // Clear the file input
