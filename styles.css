@@ -22,7 +22,7 @@ body {
   flex-direction : column;
   align-items    : center;
   justify-content: center;
-  background     : url('./assets/background-picture.jpg') center 69% fixed;
+  background     : url('./assets/background-picture.jpg') center 21% fixed;
 }
 
 .container .header {
@@ -283,19 +283,16 @@ input[type="file"]::file-selector-button:active {
 @media only screen and (max-width: 550px) {
 
   .container {
-    background: url('./assets/background-picture.jpg') center 67% fixed no-repeat;
+    background: url('./assets/background-picture.jpg') center 21% fixed no-repeat;
+    background-size: 100%;
   }
 
   .container .header {
-    margin-top      : 70%;
+    margin-top      : 40%;
     padding         : 10px 10px;
-    /* Add padding for spacing */
     border-radius   : 5px;
-    /* Optional     : Add rounded corners */
-    /* margin-bottom: 20px; */
     width           : 85%;
   }
-
 
   .container h2 {
     font-size: 16px;
