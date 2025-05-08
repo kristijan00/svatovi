@@ -23,24 +23,20 @@ body {
   align-items    : center;
   justify-content: center;
   background     : url('./assets/background-picture.jpg') center 21% fixed;
+  background-size: 62%;
 }
 
 .container .header {
   display         : flex;
   justify-content : center;
   align-items     : center;
-  background-color: rgba(0, 0, 0, 0.7);
-  /* Semi-transparent black background */
-  padding         : 30px 20px;
-  /* Add padding for spacing */
+  padding         : 20px 5px;
   border-radius   : 8px;
-  /* Optional     : Add rounded corners */
   margin-bottom   : 15px;
   margin-top      : 16%;
 }
 
 .container h2 {
-  color     : var(--quinary-color);
   font-size : 18px;
   margin    : 0 auto;
   text-align: center;
@@ -289,14 +285,13 @@ input[type="file"]::file-selector-button:active {
 
   .container .header {
     margin-top      : 40%;
-    padding         : 10px 10px;
+    padding         : 5px;
     border-radius   : 5px;
-    width           : 85%;
+    width           : 90%;
   }
 
   .container h2 {
     font-size: 16px;
-    padding  : 0 20px;
   }
 
   .file-upload {
