@@ -289,8 +289,10 @@ input[type="file"]::file-selector-button:active {
   }
 
   .container .header {
-    padding: 5px 10px; /* Add padding for spacing */
-    border-radius: 5px; /* Optional: Add rounded corners */
+    padding      : 5px 10px;
+    /* Add padding for spacing */
+    border-radius: 5px;
+    /* Optional  : Add rounded corners */
     margin-bottom: 20px;
     width: 85%;
   }
@@ -313,7 +315,7 @@ input[type="file"]::file-selector-button:active {
   }
 
   .wrapper {
-    top: 82%;
+    top: 90%;
   }
 
   .wrapper a {
