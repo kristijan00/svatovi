@@ -18,7 +18,14 @@ fileInput.addEventListener('change', () => {
 
 const uploadFiles = () => {
   if (uploadedFiles.length === 0) {
-    showPopup('No files selected!'); // Show error popup if no files are selected
+    showPopup('Morate odabrati barem jednu fotografiju!'); // Show error popup if no files are selected
+    return;
+  }
+
+  if (uploadedFiles.length > 5) {
+    showPopup('Moguće je priložiti maks. 5 fotografija odjednom!'); // Show error popup if more than 10 files are selected
+    fileInput.value = ''; // Clear the file input
+    uploadedFiles = []; // Reset the uploaded files array
     return;
   }
 
