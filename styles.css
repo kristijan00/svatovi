@@ -319,7 +319,9 @@ input[type="file"]::file-selector-button:active {
   .wrapper a {
     color           : #fff;
     background-color: var(--quaternary-color);
-    height: 38px;
+    height          : 35px;
+    line-height     : 35px;
+    width           : 180px;
   }
 
   .wrapper a:after {
