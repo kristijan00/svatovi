@@ -83,7 +83,7 @@ const uploadFiles = async () => {
                 retries--;
               } else {
                 console.error(`Error uploading file ${file.name}:`, error);
-                showPopup(`Greška pri učitavanju fotografije...`);
+                showPopup(`Greška pri učitavanju fotografija...`);
                 break; // Exit the retry loop for non-429 errors
               }
             }
@@ -94,12 +94,12 @@ const uploadFiles = async () => {
       console.log(`Batch ${Math.ceil((i + 1) / batchSize)} uploaded successfully.`);
     } catch (error) {
       console.error('Error uploading batch:', error);
-      showPopup('Greška pri učitavanju batch-a!');
+      showPopup('Greška pri učitavanju fotografija...');
     }
 
     // Add a delay between batches
     if (i + batchSize < uploadedFiles.length) {
-      await sleep(500); // 500ms delay between batches
+      await sleep(100); // 500ms delay between batches
     }
   }
 
