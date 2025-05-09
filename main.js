@@ -3,6 +3,7 @@ const loader = document.getElementById('loader');
 const popup = document.getElementById('popup');
 const popupMessage = document.getElementById('popup-message');
 const popupClose = document.getElementById('popup-close');
+const uploadButton = document.getElementById('uploadButton');
 let uploadedFiles = [];
 
 const dbx = new Dropbox.Dropbox({
@@ -12,11 +13,17 @@ const dbx = new Dropbox.Dropbox({
   accessToken: CONFIG.DROPBOX_ACCESS_TOKEN,
 });
 
-fileInput.addEventListener('change', () => {
-  uploadedFiles.push(...fileInput.files);
-});
+// Helper to generate a unique session ID (e.g., UUID-like)
+const generateSessionId = () => {
+  return Math.random().toString(36).substring(2, 10);  // Simple random string
+}
 
-const uploadFiles = () => {
+// Sleep function to delay execution (in milliseconds)
+const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const uploadFiles = async () => {
   if (uploadedFiles.length === 0) {
     showPopup('Morate odabrati barem jednu fotografiju!'); // Show error popup if no files are selected
     return;
@@ -31,27 +38,75 @@ const uploadFiles = () => {
 
   showLoader(); // Show loader before starting the upload
 
-  // Create an array of promises for all file uploads
-  const uploadPromises = uploadedFiles.map(file =>
-    dbx.filesUpload({
-      path: `/svatovi/${file.name}`,
-      contents: file,
-    })
-  );
+  // Generate a unique session folder name
+  const sessionFolder = `/svatovi/${generateSessionId()}`;
 
-  // Wait for all uploads to complete
-  Promise.all(uploadPromises)
-    .then(() => {
-      showPopup('Uspješno ste učitali fotografije!'); // Show success popup
-    })
-    .catch(() => {
-      showPopup('Ups! Dogodila se greška..'); // Show error popup
-    })
-    .finally(() => {
-      fileInput.value = ''; // Clear the file input
-      uploadedFiles = []; // Reset the uploaded files array
-      hideLoader(); // Hide loader after all uploads are complete
-    });
+  try {
+    // Create the session folder in Dropbox
+    await dbx.filesCreateFolderV2({ path: sessionFolder });
+    console.log(`Session folder created: ${sessionFolder}`);
+  } catch (error) {
+    console.error('Error creating session folder:', error);
+    showPopup('Greška pri kreiranju mape!');
+    hideLoader();
+    return;
+  }
+
+  const batchSize = 3; // Number of files to upload concurrently
+  for (let i = 0; i < uploadedFiles.length; i += batchSize) {
+    const batch = uploadedFiles.slice(i, i + batchSize); // Create a batch of files
+
+    try {
+      // Upload all files in the batch concurrently
+      await Promise.all(
+        batch.map(async (file) => {
+          let retries = 3; // Maximum number of retries for 429 responses
+
+          while (retries > 0) {
+            try {
+              console.log(`Uploading file: ${file.name}`);
+
+              // Attempt to upload the file
+              await dbx.filesUpload({
+                path: `${sessionFolder}/${file.name}`,
+                contents: file,
+              });
+
+              console.log(`File ${file.name} uploaded successfully.`);
+              break; // Exit the retry loop if the upload is successful
+            } catch (error) {
+              if (error.status === 429) {
+                // Handle rate-limiting (429 Too Many Requests)
+                const delay = Math.pow(2, 3 - retries) * 1000; // Exponential backoff
+                console.log(`Rate limit hit. Retrying in ${delay / 1000}s...`);
+                await sleep(delay); // Wait before retrying
+                retries--;
+              } else {
+                console.error(`Error uploading file ${file.name}:`, error);
+                showPopup(`Greška pri učitavanju fotografije...`);
+                break; // Exit the retry loop for non-429 errors
+              }
+            }
+          }
+        })
+      );
+
+      console.log(`Batch ${Math.ceil((i + 1) / batchSize)} uploaded successfully.`);
+    } catch (error) {
+      console.error('Error uploading batch:', error);
+      showPopup('Greška pri učitavanju batch-a!');
+    }
+
+    // Add a delay between batches
+    if (i + batchSize < uploadedFiles.length) {
+      await sleep(500); // 500ms delay between batches
+    }
+  }
+
+  hideLoader(); // Hide loader after all uploads are complete
+  showPopup('Uspješno ste učitali fotografije!'); // Show success popup
+  fileInput.value = ''; // Clear the file input
+  uploadedFiles = []; // Reset the uploaded files array
 };
 
 const showLoader = () => {
@@ -92,3 +147,7 @@ document.addEventListener('click', (event) => {
     hidePopup(); // Hide popup when clicking outside of it
   }
 })
+
+uploadButton.addEventListener('click', async () => {
+  await uploadFiles(); // Wait for the uploadFiles function to complete
+});
