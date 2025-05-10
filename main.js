@@ -42,12 +42,40 @@ const uploadFiles = async () => {
   const sessionFolder = `/svatovi/${generateSessionId()}`;
 
   try {
-    // Create the session folder in Dropbox
-    await dbx.filesCreateFolderV2({ path: sessionFolder });
-    console.log(`Session folder created: ${sessionFolder}`);
+    let retries = 2; // Maximum number of retries for folder creation
+    while (retries > 0) {
+      try {
+        // Attempt to create the session folder in Dropbox
+        await dbx.filesCreateFolderV2({ path: sessionFolder });
+        console.log(`Session folder created: ${sessionFolder}`);
+        break; // Exit the retry loop if the folder creation is successful
+      } catch (error) {
+        if (error.status === 429 || (error.status >= 500 && error.status < 600)) {
+          // Handle rate-limiting (429) or server-side errors (5xx)
+          const delay = Math.pow(2, 3 - retries) * 1000; // Exponential backoff
+          console.log(`Error creating folder (status: ${error.status}). Retrying in ${delay / 1000}s...`);
+          await sleep(delay); // Wait before retrying
+          retries--;
+        } else {
+          // Log and show popup for non-retryable errors
+          console.error('Error creating session folder:', error);
+          showPopup('Greška pri kreiranju mape!');
+          hideLoader();
+          return;
+        }
+      }
+    }
+
+    if (retries === 0) {
+      // If all retries are exhausted, show an error and exit
+      console.error('Failed to create session folder after multiple attempts.');
+      showPopup('Greška pri kreiranju mape nakon više pokušaja!');
+      hideLoader();
+      return;
+    }
   } catch (error) {
-    console.error('Error creating session folder:', error);
-    showPopup('Greška pri kreiranju mape!');
+    console.error('Unexpected error during folder creation:', error);
+    showPopup('Neočekivana greška pri kreiranju mape!');
     hideLoader();
     return;
   }
